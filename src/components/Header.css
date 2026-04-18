@@ -1,0 +1,25 @@
+.task-header {
+    position: relative;
+    margin-bottom: 40px;
+    padding-right: 100px;
+}
+
+
+.task-header__title {
+    font-size: clamp(2.5rem, 5vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    max-width: 15ch;
+    margin-bottom: 14px;
+}
+
+
+@media (max-width: 640px) {
+    .task-header {
+        padding-right: 0;
+    }
+
+    .task-header::after {
+        display: none;
+    }
+}
