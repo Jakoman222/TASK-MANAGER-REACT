@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev src/index.ts"
   },
-  "keywords": [],
+  "keywords": ["task-manager"],
   "author": "",
   "license": "ISC",
   "type": "commonjs",

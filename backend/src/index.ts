@@ -1,3 +1,5 @@
+import consumers = require("node:stream/consumers")
+
 // Se carga variables del archivo .env
 require("dotenv").config()
 
@@ -12,7 +14,8 @@ const cors = require("cors") //
 const jwt = require('jsonwebtoken')
 
 // Agregamos nuestra clave // JWT
-const SECRET_KEY = 'MBLACKss501!'
+const SECRET_KEY = process.env.JWT_SECRET || 'MBLACKss501!'
+// Evita dejar la clave en el codigo
 
 // 6) Importamos Prisma Client y el adaptador para PostgreSQL
 // Prisma es la herramienta que conecta nuestro backend con la base de datos
@@ -40,6 +43,57 @@ app.use(cors())
 
 // Middleware para leer JSON del body
 app.use(express.json());
+
+
+//
+
+// JWT
+// Creacion de middleware //
+// Funcion verifyToken
+function verifyToken(req: any, res: any, next: any) {
+    const authHeader = req.headers.authorization
+    const token = authHeader && authHeader.split(' ')[1]
+
+    if (!token){
+        return res.status(401).json({ message: 'Token no proporcionado' })
+    }
+
+    jwt.verify(token, SECRET_KEY, (error: any, user: any) => {
+        if (error) {
+            return res.status(403).json({ message: 'Token inválido' })
+        }
+        req.user = user
+        // Llama a next
+        next()
+    })
+}
+
+// Nueva ruta POST, para JWT
+app.post('/login', (req:any, res:any) => {
+    // obtener username y password
+    const { username, password } = req.body
+
+    // validar credenciales
+    if (username !== 'postgresql' || password !== '1234' ){
+        return res.status(401).json({ message: 'Ususario o contraseña incorrectos' })
+    }
+
+    const payload = { username }
+    // generar token con jwt.sign()
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' })
+    // const token = jwt.sign(
+    //     { username: username},
+    //     SECRET_KEY,
+    //     { expiresIn: '1h'}
+    // )
+})
+
+// JWT
+// Agregar nueva ruta
+// Creando ruta PROTEGIDA
+app.get('/private', verifyToken, (req: any, res: any) => {
+    res.json({ message: 'Acceso permitido' })
+})
 
 /* 3) CAMBIO IMPORTANTE: */
 /**
@@ -74,21 +128,6 @@ app.get("/tasks", async (req: any, res:any) => {
  * AHORA: recibe 'text' (igual que el frontend)
  */
 
-// app.post("/tasks",(req:any,res:any)=>{
-
-//     console.log('POST /tasks fue llamado')
-//     console.log('Datos recibidos:', req.body)
-
-//     const newTask ={
-//         id: req.body.id,
-//         text: req.body.text,
-//         completed: req.body.completed
-//     }
-    
-//     tasks.push(newTask)
-//     res.json(newTask)
-// })
-
 app.post("/tasks", async (req: any, res: any) => {
     try {
         const newTask = await prisma.task.create({
@@ -106,18 +145,6 @@ app.post("/tasks", async (req: any, res: any) => {
     }
 })
 
-
-// Nueva ruta POST, para JWT
-app.post('/login', (req:any, res:any) => {
-    // obtener username y password
-    // validar credenciales
-    // generar token con jwt.sign()
-    // const token = jwt.sign(
-    //     { username: username},
-    //     SECRET_KEY,
-    //     { expiresIn: '1h'}
-    // )
-})
 
 
 // 11) ADD PUT /tasks/:id & ADD DELETE
