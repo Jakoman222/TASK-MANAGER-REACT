@@ -1,4 +1,4 @@
-// SE carga variables del archivo .env
+// Se carga variables del archivo .env
 require("dotenv").config()
 
 //import express from "express"
@@ -7,6 +7,12 @@ const express = require("express")
 // Importamos CORS
 // Esto permite que el forntend (React) pueda comunicarse con el backend
 const cors = require("cors") //
+
+// Importamos JWT
+const jwt = require('jsonwebtoken')
+
+// Agregamos nuestra clave // JWT
+const SECRET_KEY = 'MBLACKss501!'
 
 // 6) Importamos Prisma Client y el adaptador para PostgreSQL
 // Prisma es la herramienta que conecta nuestro backend con la base de datos
@@ -99,6 +105,20 @@ app.post("/tasks", async (req: any, res: any) => {
         res.status(500).json({ message: "Error al crear tarea"})
     }
 })
+
+
+// Nueva ruta POST, para JWT
+app.post('/login', (req:any, res:any) => {
+    // obtener username y password
+    // validar credenciales
+    // generar token con jwt.sign()
+    // const token = jwt.sign(
+    //     { username: username},
+    //     SECRET_KEY,
+    //     { expiresIn: '1h'}
+    // )
+})
+
 
 // 11) ADD PUT /tasks/:id & ADD DELETE
 // Actualiza el estado 'completed' de una tarea especifica
