@@ -1,4 +1,4 @@
-import consumers = require("node:stream/consumers")
+// import consumers = require("node:stream/consumers")
 
 // Se carga variables del archivo .env
 require("dotenv").config()
@@ -69,30 +69,38 @@ function verifyToken(req: any, res: any, next: any) {
 }
 
 // Nueva ruta POST, para JWT
-app.post('/login', (req:any, res:any) => {
+app.post('/login', async (req:any, res:any) => {
     // obtener username y password
     const { username, password } = req.body
 
     // validar credenciales
-    if (username !== 'postgresql' || password !== '1234' ){
-        return res.status(401).json({ message: 'Ususario o contraseña incorrectos' })
+    if (!username || !password){
+        return res.status(400).json({ message: 'Faltan username o password' })
     }
 
-    const payload = { username }
-    // generar token con jwt.sign()
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' })
-    // const token = jwt.sign(
-    //     { username: username},
-    //     SECRET_KEY,
-    //     { expiresIn: '1h'}
-    // )
+    const user = await prisma.user.findUnique({
+    where: { username },
+    })
+
+    if (!user || user.password !== password) {
+        return res.status(401).json({ message: 'Usuario o contraseña inválidos' })
+    }
+
+    const token = jwt.sign(
+        { userId: user.id, username: user.username },
+        SECRET_KEY,
+        { expiresIn: '1h' }
+    )
+
+    res.json({ token })
 })
 
 // JWT
 // Agregar nueva ruta
 // Creando ruta PROTEGIDA
 app.get('/private', verifyToken, (req: any, res: any) => {
-    res.json({ message: 'Acceso permitido' })
+    console.log('Acceso permitido')
+    res.json({ message: 'Acceso permitido', user: req.user })
 })
 
 /* 3) CAMBIO IMPORTANTE: */
