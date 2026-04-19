@@ -1,5 +1,3 @@
-// import consumers = require("node:stream/consumers")
-
 // Se carga variables del archivo .env
 require("dotenv").config()
 
@@ -15,6 +13,7 @@ const jwt = require('jsonwebtoken')
 
 // Agregamos nuestra clave // JWT
 const SECRET_KEY = process.env.JWT_SECRET || 'MBLACKss501!'
+console.log('SECRET_KEY used:', SECRET_KEY)
 // Evita dejar la clave en el codigo
 
 // 6) Importamos Prisma Client y el adaptador para PostgreSQL
@@ -51,14 +50,19 @@ app.use(express.json());
 // Creacion de middleware //
 // Funcion verifyToken
 function verifyToken(req: any, res: any, next: any) {
+    console.log('Middleware verifyToken llamado')
     const authHeader = req.headers.authorization
+    console.log('authHeader:', authHeader)
     const token = authHeader && authHeader.split(' ')[1]
+    console.log('token:', token)
 
     if (!token){
         return res.status(401).json({ message: 'Token no proporcionado' })
     }
 
     jwt.verify(token, SECRET_KEY, (error: any, user: any) => {
+        console.log('verify error:', error)
+        console.log('verify user:', user)
         if (error) {
             return res.status(403).json({ message: 'Token inválido' })
         }
@@ -70,6 +74,9 @@ function verifyToken(req: any, res: any, next: any) {
 
 // Nueva ruta POST, para JWT
 app.post('/login', async (req:any, res:any) => {
+    console.log('Body recibido:', req.body) // Agrega esto para debug
+    console.log('Headers:', req.headers) // Y esto
+    
     // obtener username y password
     const { username, password } = req.body
 
@@ -78,9 +85,11 @@ app.post('/login', async (req:any, res:any) => {
         return res.status(400).json({ message: 'Faltan username o password' })
     }
 
-    const user = await prisma.user.findUnique({
+    const user = await prisma.users.findUnique({
     where: { username },
     })
+
+    console.log('Usuario encontrado:', user)
 
     if (!user || user.password !== password) {
         return res.status(401).json({ message: 'Usuario o contraseña inválidos' })
@@ -95,6 +104,23 @@ app.post('/login', async (req:any, res:any) => {
     res.json({ token })
 })
 
+// Ruta temporal para crear usuario de prueba
+app.post('/create-user', async (req: any, res: any) => {
+  try {
+    const user = await prisma.users.create({
+      data: {
+        username: 'admin',
+        password: '1234'
+      }
+    })
+    res.json({ message: 'Usuario creado', user })
+  } catch (error: any) {
+    res.status(500).json({ error: error.message })
+  }
+})
+
+// Ruta de prueba
+app.get('/test', (req: any, res: any) => res.send('Test route works'))
 // JWT
 // Agregar nueva ruta
 // Creando ruta PROTEGIDA
@@ -102,7 +128,6 @@ app.get('/private', verifyToken, (req: any, res: any) => {
     console.log('Acceso permitido')
     res.json({ message: 'Acceso permitido', user: req.user })
 })
-
 /* 3) CAMBIO IMPORTANTE: */
 /**
  * ANTES: se usaba 'title'
