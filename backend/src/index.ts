@@ -52,7 +52,9 @@ app.use(express.json());
 function verifyToken(req: any, res: any, next: any) {
     console.log('Middleware verifyToken llamado')
     const authHeader = req.headers.authorization
+    
     console.log('authHeader:', authHeader)
+    console.log('Headers:', req.headers)
     const token = authHeader && authHeader.split(' ')[1]
     console.log('token:', token)
 
@@ -73,70 +75,40 @@ function verifyToken(req: any, res: any, next: any) {
 }
 
 // Nueva ruta POST, para JWT
-app.post('/login', async (req:any, res:any) => {
+app.post('/login', (req:any, res:any) => {
     console.log('Body recibido:', req.body) // Agrega esto para debug
     console.log('Headers:', req.headers) // Y esto
-    
     // obtener username y password
     const { username, password } = req.body
-
+    console.log(`Objeto username and password: ${JSON.stringify(req.body)}`)
     // validar credenciales
-    if (!username || !password){
-        return res.status(400).json({ message: 'Faltan username o password' })
+    if (username !== 'postgresql' || password !== 'password' ){
+        return res.status(401).json({ message: 'Ususario o contraseña incorrectos' })
     }
 
-    const user = await prisma.users.findUnique({
-    where: { username },
-    })
+    const payload = { username }
+    // generar token con jwt.sign()
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' })
+    // const token = jwt.sign(
+    //     { username: username},
+    //     SECRET_KEY,
+    //     { expiresIn: '1h'}
+    // )
 
-    console.log('Usuario encontrado:', user)
-
-    if (!user || user.password !== password) {
-        return res.status(401).json({ message: 'Usuario o contraseña inválidos' })
-    }
-
-    const token = jwt.sign(
-        { userId: user.id, username: user.username },
-        SECRET_KEY,
-        { expiresIn: '1h' }
-    )
-
-    res.json({ token })
+    res.json({ token: token }) // para mandar los datos
+    console.log('Token generado:', token) // Agrega esto para debug
 })
 
-// Ruta temporal para crear usuario de prueba
-app.post('/create-user', async (req: any, res: any) => {
-  try {
-    const user = await prisma.users.create({
-      data: {
-        username: 'admin',
-        password: '1234'
-      }
-    })
-    res.json({ message: 'Usuario creado', user })
-  } catch (error: any) {
-    res.status(500).json({ error: error.message })
-  }
-})
-
-// Ruta de prueba
-app.get('/test', (req: any, res: any) => res.send('Test route works'))
+// ---------------------------------------------------
 // JWT
 // Agregar nueva ruta
 // Creando ruta PROTEGIDA
 app.get('/private', verifyToken, (req: any, res: any) => {
-    console.log('Acceso permitido')
-    res.json({ message: 'Acceso permitido', user: req.user })
+    res.json({ message: 'Acceso permitido' })
 })
+
+
 /* 3) CAMBIO IMPORTANTE: */
-/**
- * ANTES: se usaba 'title'
- * AHORA: Se permite cualquier origen (ideal para el desarrollo/clase)
- */
-// let tasks = [
-//     {id: 1, text: "Study Express", completed: false},
-//     {id: 2, text: "Build backend", completed: true}
-// ]
 
 // GET ruta de prueba
 app.get("/", (req: any, res: any) => {
@@ -182,7 +154,6 @@ app.post("/tasks", async (req: any, res: any) => {
 
 // 11) ADD PUT /tasks/:id & ADD DELETE
 // Actualiza el estado 'completed' de una tarea especifica
-
 app.put("/tasks/:id", async (req: any, res: any) => {
     try {
         const taskID = Number(req.params.id)
@@ -234,17 +205,33 @@ app.delete('/tasks/:id', async (req:any, res:any) => {
     
 })
 
-// ---------------------------------------------------
 
-// JWT
 
-// ---------------------------------------------------
-
-//
-
- 
-app.listen(PORT, ()=>{
-    console.log(`Server running on port ${PORT}`)
+// Captura de errores
+// Manejadores de errores globales y logs
+process.on('unhandledRejection', (reason, promise) => {
+    console.error("❌ Promise rechazada no manejada:", reason)
 })
 
+process.on('uncaughtException', (error) => {
+    console.error("❌ Excepción no capturada:", error)
+    process.exit(1)
+})
 
+// Desconectar Prisma gracefully
+process.on('SIGINT', async () => {
+    console.log('\n📌 Recibida señal SIGINT, cerrando servidor...')
+    await prisma.$disconnect()
+    process.exit(0)
+})
+
+process.on('SIGTERM', async () => {
+    console.log('\n📌 Recibida señal SIGTERM, cerrando servidor...')
+    await prisma.$disconnect()
+    process.exit(0)
+})
+
+app.listen(PORT, ()=>{
+    console.log(`✅ Server running on port ${PORT}`)
+    console.log('📂 Escuchando cambios en src/ para reiniciar...')
+})

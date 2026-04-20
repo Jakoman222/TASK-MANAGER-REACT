@@ -90,7 +90,7 @@ function App() {
   try {
     await fetch(`http://localhost:3000/tasks/${id}`, {
       method: "DELETE",
-    });
+    })
   
 
     // 🔥 actualizar estado SIN recargar
@@ -98,17 +98,31 @@ function App() {
   } catch (error) {
     console.error("Error eliminando:", error);
   }
-};
+}
 
   // --------------------------------------------------------------------------------
 
-  const toggleTask = (taskId) => {
-    setTasks((currentTasks) =>
-      currentTasks.map((task) =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task
-      )
-    );
-  };
+  const toggleTask = async (taskId) => {
+    const task = tasks.find(t => t.id === taskId);
+    if (!task) return;
+
+    const nuevoValor = !task.completed;
+
+    try {
+      await fetch(`http://localhost:3000/tasks/${taskId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ completed: nuevoValor })
+      });
+
+      // Refrescar todas las tareas desde el backend para asegurar actualización en frontend
+      const responseAll = await fetch("http://localhost:3000/tasks");
+      const data = await responseAll.json();
+      setTasks(data);
+    } catch (error) {
+      console.error("Error toggling task:", error);
+    }
+  }
 
 
 
@@ -125,7 +139,7 @@ function App() {
         <Footer />
       </section>
     </main>
-  );
+  )
 }
 
 export default App;
