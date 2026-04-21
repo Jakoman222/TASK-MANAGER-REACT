@@ -205,7 +205,7 @@ app.delete('/tasks/:id', async (req:any, res:any) => {
 
 
 
-// Captura de errores
+// CAPTURA DE ERRORES Y LOGS
 // Manejadores de errores globales y logs
 process.on('unhandledRejection', (reason, promise) => {
     console.error("❌ Promise rechazada no manejada:", reason)
