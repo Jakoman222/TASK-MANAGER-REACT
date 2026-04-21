@@ -30,9 +30,7 @@ const adapter = new PrismaPg({
 })
 
 // Creamos la instancia de Prisma
-// const prisma = new PrismaClient()
-
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({adapter})
 
 
 
