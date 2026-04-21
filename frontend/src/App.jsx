@@ -5,6 +5,9 @@ import Header from "./components/Header";
 import TaskInput from "./components/TaskInput";
 import TaskList from "./components/TaskList";
 
+// Se agrega el URL generado despues de desplegar el BACKEND
+const VITE_API_URL = 'https://task-manager-react-x4gb.onrender.com'
+
 function App() {
   // App guarda el estado compartido para que input y lista usen la misma informacion.
   const [tasks, setTasks] = useState([]);
@@ -13,7 +16,7 @@ function App() {
   // 2) CONEXION BACKEND
 
   useEffect(() =>{
-    fetch("http://localhost:3000/tasks")
+    fetch(`${import.meta.env.VITE_API_URL}/tasks`)
       .then((response) => response.json())
       .then((data) => {
         setTasks(data)
