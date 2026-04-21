@@ -124,12 +124,21 @@ app.get("/", (req: any, res: any) => {
 // GET
 app.get("/tasks", async (req: any, res:any) => {
     try {
+        await prisma.$connect()
+        console.log("✅ Conectado a DB") 
+        
         const tasks = await prisma.task.findMany()
+
+        console.log("📦 Tasks:", tasks)
+
         res.json(tasks)
 
-    }catch(error){
-        console.error('Error en GET /tasks:', error)
-        res.status(500).json({ message: 'Error al obtener tareas'})
+    }catch(error: any){
+        console.error('❌ Error en GET /tasks:', error)
+        res.status(500).json({ 
+            message: error.message,
+            code: error.code
+        })
     }
 })
 
