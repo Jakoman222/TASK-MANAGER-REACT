@@ -20,25 +20,19 @@ console.log('SECRET_KEY used:', SECRET_KEY)
 // 6) Importamos Prisma Client y el adaptador para PostgreSQL
 // Prisma es la herramienta que conecta nuestro backend con la base de datos
 const { PrismaClient } = require("@prisma/client")
-// const { PrismaPg } = require("@prisma/adapter-pg")
+const { PrismaPg } = require("@prisma/adapter-pg")
 
 // 7) Se crea el adaptador usando la URL de conexion
 // Es la conexion real a postgresql
 
-// const adapter = new PrismaPg({
-//     connectionString: process.env.DATABASE_URL,
-// })
+const adapter = new PrismaPg({
+    connectionString: process.env.DATABASE_URL,
+})
 
 // Creamos la instancia de Prisma
 // const prisma = new PrismaClient()
 
-const prisma = new PrismaClient({
-  datasources: {
-    db: {
-      url: process.env.DATABASE_URL,
-    },
-  },
-})
+const prisma = new PrismaClient()
 
 
 
