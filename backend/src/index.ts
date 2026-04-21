@@ -88,7 +88,10 @@ app.post('/login', (req:any, res:any) => {
 
     const payload = { username }
     // generar token con jwt.sign()
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' })
+    const token = jwt.sign(
+        payload, 
+        SECRET_KEY, 
+        { expiresIn: '1h' })
     // const token = jwt.sign(
     //     { username: username},
     //     SECRET_KEY,
@@ -127,11 +130,6 @@ app.get("/tasks", async (req: any, res:any) => {
     }
 })
 
-/**
- * POST /tasks
- * ANTES: recibia 'title'
- * AHORA: recibe 'text' (igual que el frontend)
- */
 
 app.post("/tasks", async (req: any, res: any) => {
     try {

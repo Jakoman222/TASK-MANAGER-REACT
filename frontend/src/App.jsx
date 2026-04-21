@@ -23,23 +23,6 @@ function App() {
       })
   }, [])
 
-  // --------------------------------------------------------------------------------
-
-  // const addTask = (taskText) => {
-  //   const cleanText = taskText.trim();
-
-  //   if (!cleanText) {
-  //     return;
-  //   }
-
-  //   const newTask = {
-  //     id: Date.now(),
-  //     text: cleanText,
-  //     completed: false,
-  //   };
-
-  //   setTasks((currentTasks) => [...currentTasks, newTask]);
-  // };
 
   const addTask = (taskText) => {
     const cleanText = taskText.trim()
@@ -76,13 +59,6 @@ function App() {
 
   // --------------------------------------------------------------------------------
   
-  // const removeTask = (taskId) => {
-  //   setTasks((currentTasks) =>
-  //     currentTasks.filter((task) => task.id !== taskId)
-  //   );
-
-  // };
-
   // DELETE
 
   const removeTask = async (id) => {
@@ -92,7 +68,6 @@ function App() {
       method: "DELETE",
     })
   
-
     // 🔥 actualizar estado SIN recargar
     setTasks((prev) => prev.filter((task) => task.id !== id));
   } catch (error) {
@@ -123,7 +98,6 @@ function App() {
       console.error("Error toggling task:", error);
     }
   }
-
 
 
   return (
