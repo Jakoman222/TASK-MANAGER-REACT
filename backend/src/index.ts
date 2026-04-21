@@ -1,25 +1,26 @@
 // Se carga variables del archivo .env
-require("dotenv").config()
-
-//import express from "express"
-const express = require("express")
+import dotenv from "dotenv"
+dotenv.config() // Carga las variables de entorno desde el archivo .env
+import express from "express"
+import { Request, Response, NextFunction } from "express"
 
 // Importamos CORS
 // Esto permite que el forntend (React) pueda comunicarse con el backend
-const cors = require("cors") //
+import cors from "cors" //
 
 // Importamos JWT
-const jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken'
 
 // Agregamos nuestra clave // JWT
 const SECRET_KEY = process.env.JWT_SECRET || 'MBLACKss501!'
+// const SECRET_KEY = process.env.JWT_SECRET || 'MBLACKss501!'
 console.log('SECRET_KEY used:', SECRET_KEY)
 // Evita dejar la clave en el codigo
 
 // 6) Importamos Prisma Client y el adaptador para PostgreSQL
 // Prisma es la herramienta que conecta nuestro backend con la base de datos
-const { PrismaClient } = require("@prisma/client")
-const { PrismaPg } = require("@prisma/adapter-pg")
+import { PrismaClient } from "@prisma/client"
+import { PrismaPg } from "@prisma/adapter-pg"
 
 // 7) Se crea el adaptador usando la URL de conexion
 // Es la conexion real a postgresql
@@ -34,7 +35,7 @@ const prisma = new PrismaClient({ adapter })
 
 
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 // ANTES: El frontend no podia conectarse (error de CORS)
 // AHORA: Permitimos cualquier origen (ideal para desarrollo clase)
