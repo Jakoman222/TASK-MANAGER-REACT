@@ -6,8 +6,8 @@ import TaskInput from "./components/TaskInput";
 import TaskList from "./components/TaskList";
 
 // Se agrega el URL generado despues de desplegar el BACKEND
-const VITE_API_URL = 'https://task-manager-react-x4gb.onrender.com'
-
+const API_URL = 'https://task-manager-react-x4gb.onrender.com'
+// ${import.meta.env.VITE_API_URL} // sale undefined
 function App() {
   // App guarda el estado compartido para que input y lista usen la misma informacion.
   const [tasks, setTasks] = useState([]);
@@ -16,7 +16,7 @@ function App() {
   // 2) CONEXION BACKEND
 
   useEffect(() =>{
-    fetch(`${import.meta.env.VITE_API_URL}/tasks`)
+    fetch(`${API_URL}/tasks`)
       .then((response) => response.json())
       .then((data) => {
         setTasks(data)
@@ -40,7 +40,7 @@ function App() {
       completed: false
     }
 
-    fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
+    fetch(`${API_URL}/tasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ function App() {
   const removeTask = async (id) => {
   console.log(id)
   try {
-    await fetch(`${import.meta.env.VITE_API_URL}/tasks/${id}`, {
+    await fetch(`${API_URL}/tasks/${id}`, {
       method: "DELETE",
     })
   
@@ -87,14 +87,14 @@ function App() {
     const nuevoValor = !task.completed;
 
     try {
-      await fetch(`${import.meta.env.VITE_API_URL}/tasks/${taskId}`, {
+      await fetch(`${API_URL}/tasks/${taskId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completed: nuevoValor })
       });
 
       // Refrescar todas las tareas desde el backend para asegurar actualización en frontend
-      const responseAll = await fetch(`${import.meta.env.VITE_API_URL}/tasks`);
+      const responseAll = await fetch(`${API_URL}/tasks`);
       const data = await responseAll.json();
       setTasks(data);
     } catch (error) {
