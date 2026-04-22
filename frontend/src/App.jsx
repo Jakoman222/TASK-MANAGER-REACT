@@ -40,7 +40,7 @@ function App() {
       completed: false
     }
 
-    fetch("http://localhost:3000/tasks", {
+    fetch(`${import.meta.env.VITE_API_URL}/tasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ function App() {
   const removeTask = async (id) => {
   console.log(id)
   try {
-    await fetch(`http://localhost:3000/tasks/${id}`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/tasks/${id}`, {
       method: "DELETE",
     })
   
@@ -87,14 +87,14 @@ function App() {
     const nuevoValor = !task.completed;
 
     try {
-      await fetch(`http://localhost:3000/tasks/${taskId}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/tasks/${taskId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completed: nuevoValor })
       });
 
       // Refrescar todas las tareas desde el backend para asegurar actualización en frontend
-      const responseAll = await fetch("http://localhost:3000/tasks");
+      const responseAll = await fetch(`${import.meta.env.VITE_API_URL}/tasks`);
       const data = await responseAll.json();
       setTasks(data);
     } catch (error) {
