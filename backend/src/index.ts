@@ -39,9 +39,7 @@ const PORT = process.env.PORT || 3000
 
 // ANTES: El frontend no podia conectarse (error de CORS)
 // AHORA: Permitimos cualquier origen (ideal para desarrollo clase)
-app.use(cors({
-    origin: 'https://task-manager-react-x4gb.onrender.com/' // Permite cualquier origen (no recomendado para producción)
-}))
+app.use(cors()) // permite cualquier origen
 
 // Middleware para leer JSON del body
 app.use(express.json());
