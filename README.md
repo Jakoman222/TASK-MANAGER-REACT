@@ -1,4 +1,4 @@
-## Usage
+<!-- ## Usage
 
 ```bash
 $ npm install # or pnpm install or yarn install
@@ -25,4 +25,54 @@ Your app is ready to be deployed!
 
 ## Deployment
 
-Learn more about deploying your application with the [documentations](https://vite.dev/guide/static-deploy.html)
+Learn more about deploying your application with the [documentations](https://vite.dev/guide/static-deploy.html) -->
+
+# 📝 Task Manager App (Full Stack)
+
+Aplicación full stack para la gestión de tareas, desarrollada con un enfoque moderno utilizando React en el frontend, Node.js con Express en el backend y PostgreSQL como base de datos, gestionada mediante Prisma ORM.
+
+---
+
+## 🚀 Tecnologías utilizadas
+
+### 🔹 Frontend
+- React
+- Fetch API
+- Despliegue en Vercel
+
+### 🔹 Backend
+- Node.js
+- Express.js
+- JSON Web Tokens (JWT) para autenticación
+- Despliegue en Render
+
+### 🔹 Base de datos
+- PostgreSQL
+- Prisma ORM
+
+---
+
+## 🧩 Arquitectura del proyecto
+
+El proyecto sigue una arquitectura cliente-servidor:
+
+1. El usuario interactúa con la interfaz en React.
+2. El frontend envía peticiones HTTP al backend.
+3. El backend procesa la lógica con Express.
+4. Prisma gestiona la comunicación con PostgreSQL.
+5. El backend responde con datos en formato JSON.
+6. React actualiza la interfaz dinámicamente.
+
+---
+
+## 🔐 Autenticación con JWT
+
+El sistema implementa autenticación basada en tokens:
+
+1. El usuario inicia sesión (`POST /login`)
+2. El backend valida las credenciales y genera un token JWT
+3. El token se almacena en el cliente (localStorage)
+4. Para acceder a rutas protegidas, se envía:
+
+```http
+Authorization: Bearer TOKEN
