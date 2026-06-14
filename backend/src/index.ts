@@ -14,7 +14,7 @@ import jwt from 'jsonwebtoken'
 // Agregamos nuestra clave // JWT
 const SECRET_KEY = process.env.JWT_SECRET || 'MBLACKss501!'
 // const SECRET_KEY = process.env.JWT_SECRET || 'MBLACKss501!'
-console.log('SECRET_KEY used:', SECRET_KEY)
+// console.log('SECRET_KEY used:', SECRET_KEY)
 // Evita dejar la clave en el codigo
 
 // 6) Importamos Prisma Client y el adaptador para PostgreSQL
