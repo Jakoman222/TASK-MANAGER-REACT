@@ -33,6 +33,16 @@ Aplicación full stack para la gestión de tareas, desarrollada con un enfoque m
 
 ---
 
+<!-- BADGE_CI -->
+## 🚀 Instalación local
+ 
+```bash
+git clone https://github.com/Jakoman222/TASK-MANAGER-REACT.git
+cd task-manager-react
+npm install
+```
+
+
 ## 🚀 Tecnologías utilizadas
 
 ### 🔹 Frontend
@@ -76,3 +86,15 @@ El sistema implementa autenticación basada en tokens:
 
 ```http
 Authorization: Bearer TOKEN
+
+## 📜 Comandos disponibles
+ 
+| Comando          | Descripción                              |
+|------------------|-------------------------------------------|
+| `npm run dev`    | Levanta el entorno de desarrollo           |
+| `npm run build`  | Genera el build de producción              |
+| `npm test`       | Corre las pruebas automatizadas (pendiente) |
+ 
+## 🗄️ Base de datos
+ 
+PostgreSQL con migraciones y seeds gestionados con Prisma
