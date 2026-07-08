@@ -1,5 +1,18 @@
+# Dependencias
 node_modules
-# Keep environment variables out of version control
-.env
 
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Builds
+dist/
+build/
 /src/generated/prisma
+
+# Archivos de IDE y sistema operativo
+.vscode/
+.idea/
+.DS_Store
+*.log
