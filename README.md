@@ -92,15 +92,15 @@ El sistema implementa autenticación basada en tokens:
 ```http
 Authorization: Bearer TOKEN
 
-## 📜 Comandos disponibles
- 
+
 ## 📜 Comandos disponibles
 
-| Comando         | Descripción                                             | Uso recomendado       |
-| --------------- | ------------------------------------------------------- | --------------------- |
-| `npm run dev`   | Inicia el entorno de desarrollo con recarga automática. | Desarrollo local      |
-| `npm run build` | Genera la versión optimizada para producción.           | Antes de desplegar    |
-| `npm test`      | Ejecuta las pruebas automatizadas del proyecto.         | Validación del código |
+| Comando         | Uso        | Descripción                                                                   |
+| --------------- | ---------- | ----------------------------------------------------------------------------- |
+| `npm run dev`   | Desarrollo | Inicia el entorno local para trabajar y probar cambios durante el desarrollo. |
+| `npm run build` | Producción | Genera una versión optimizada del proyecto lista para despliegue.             |
+| `npm test`      | Testing    | Ejecuta las pruebas automatizadas. Actualmente pendiente de implementación.   |
+
 
 > Nota: Las pruebas automatizadas se implementarán en una siguiente etapa del proyecto.
 
