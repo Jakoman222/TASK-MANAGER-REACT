@@ -41,7 +41,12 @@ git clone https://github.com/Jakoman222/TASK-MANAGER-REACT.git
 cd task-manager-react
 npm install
 ```
+### Variables de entorno
+Crea un archivo `.env` en la raíz con las siguientes claves (sin valores reales en este documento):
 
+```
+DATABASE_URL=
+```
 
 ## 🚀 Tecnologías utilizadas
 
@@ -89,11 +94,16 @@ Authorization: Bearer TOKEN
 
 ## 📜 Comandos disponibles
  
-| Comando          | Descripción                              |
-|------------------|-------------------------------------------|
-| `npm run dev`    | Levanta el entorno de desarrollo           |
-| `npm run build`  | Genera el build de producción              |
-| `npm test`       | Corre las pruebas automatizadas (pendiente) |
+## 📜 Comandos disponibles
+
+| Comando         | Descripción                                             | Uso recomendado       |
+| --------------- | ------------------------------------------------------- | --------------------- |
+| `npm run dev`   | Inicia el entorno de desarrollo con recarga automática. | Desarrollo local      |
+| `npm run build` | Genera la versión optimizada para producción.           | Antes de desplegar    |
+| `npm test`      | Ejecuta las pruebas automatizadas del proyecto.         | Validación del código |
+
+> Nota: Las pruebas automatizadas se implementarán en una siguiente etapa del proyecto.
+
  
 ## 🗄️ Base de datos
  
