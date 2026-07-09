@@ -107,4 +107,4 @@ Authorization: Bearer TOKEN
  
 ## 🗄️ Base de datos
  
-PostgreSQL con migraciones y seeds gestionados con Prisma
+PostgreSQL con migraciones y seeds gestionados con Prisma# prueba de proteccion
