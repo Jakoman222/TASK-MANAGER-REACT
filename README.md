@@ -64,6 +64,7 @@ DATABASE_URL=
 ### 🔹 Base de datos
 - PostgreSQL
 - Prisma ORM
+- Despliegue en Neon
 
 ---
 
@@ -104,7 +105,7 @@ Authorization: Bearer TOKEN
 
 > Nota: Las pruebas automatizadas se implementarán en una siguiente etapa del proyecto.
 
- 
+
 ## 🗄️ Base de datos
- 
+
 PostgreSQL con migraciones y seeds gestionados con Prisma
