@@ -35,6 +35,8 @@ Aplicación full stack para la gestión de tareas, desarrollada con un enfoque m
 
 [![CI](https://github.com/Jakoman222/TASK-MANAGER-REACT/actions/workflows/ci.yml/badge.svg)](https://github.com/Jakoman222/TASK-MANAGER-REACT/actions/workflows/ci.yml)
 
+---
+
 ## 🚀 Instalación local
  
 ```bash
