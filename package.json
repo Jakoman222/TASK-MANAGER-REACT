@@ -1,0 +1,24 @@
+{
+  "name": "task-manager-react",
+  "version": "1.0.0",
+  "description": "<!-- ## Usage",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jakoman222/TASK-MANAGER-REACT.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Jakoman222/TASK-MANAGER-REACT/issues"
+  },
+  "homepage": "https://github.com/Jakoman222/TASK-MANAGER-REACT#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.1",
+    "@vitest/coverage-v8": "^4.1.10"
+  }
+}
