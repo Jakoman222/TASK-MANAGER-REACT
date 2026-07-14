@@ -27,7 +27,7 @@ export default defineConfig({
 	use: {
 		/* Base URL to use in actions like `await page.goto('')`. */
 		baseURL:
-			'https://task-manager-react-livid.vercel.app?_vercel_share=ONfyXmKLDPXZD4ffq4yhgXCzJ6RgUnQ0',
+			'https://task-manager-react-livid.vercel.app',
 
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: 'on-first-retry',
@@ -43,9 +43,9 @@ export default defineConfig({
 	],
 
 	/* Run your local dev server before starting the tests */
-	webServer: {
-		command: 'npm run start',
-		url: 'https://task-manager-react-livid.vercel.app?_vercel_share=ONfyXmKLDPXZD4ffq4yhgXCzJ6RgUnQ0',
-		reuseExistingServer: true,
-	},
+	// webServer: {
+	// 	command: 'npm run start',
+	// 	url: 'https://task-manager-react-livid.vercel.app?_vercel_share=ONfyXmKLDPXZD4ffq4yhgXCzJ6RgUnQ0',
+	// 	reuseExistingServer: true,
+	// },
 });

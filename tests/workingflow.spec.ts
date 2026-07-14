@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('Un usuario puede ver la tarea y verla en la lista', async ({ page }) => {
   // 1. Entrar en la app
-  await page.goto('https://task-manager-react-livid.vercel.app');
+  await page.goto('/');
 
   // 2. Crear tarea
   await page
