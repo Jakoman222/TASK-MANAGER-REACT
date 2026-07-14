@@ -46,6 +46,6 @@ export default defineConfig({
 	webServer: {
 		command: 'npm run start',
 		url: 'https://task-manager-react-livid.vercel.app?_vercel_share=ONfyXmKLDPXZD4ffq4yhgXCzJ6RgUnQ0',
-		reuseExistingServer: !process.env.CI,
+		reuseExistingServer: true,
 	},
 });
