@@ -118,6 +118,9 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
+      - name: Generar Prisma Client
+        run: npx prisma generate
+
       - name: Ejecutar tests del backend
         run: npx vitest run
 
