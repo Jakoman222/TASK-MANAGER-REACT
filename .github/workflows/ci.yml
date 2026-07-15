@@ -93,6 +93,9 @@ jobs:
       - name: Compilar backend
         run: npm run build
 
+      - name: Ejecutar tests del backend
+        run: npx vitest run
+
   e2e-tests:
     name: Playwright - Pruebas E2E
     runs-on: ubuntu-latest
