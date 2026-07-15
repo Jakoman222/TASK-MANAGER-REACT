@@ -26,8 +26,7 @@ export default defineConfig({
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('')`. */
-		baseURL:
-			'https://task-manager-react-livid.vercel.app',
+		baseURL: 'http://127.0.0.1:5173',
 
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: 'on-first-retry',
@@ -39,13 +38,12 @@ export default defineConfig({
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'] },
 		},
-
 	],
 
-	/* Run your local dev server before starting the tests */
-	// webServer: {
-	// 	command: 'npm run start',
-	// 	url: 'https://task-manager-react-livid.vercel.app?_vercel_share=ONfyXmKLDPXZD4ffq4yhgXCzJ6RgUnQ0',
-	// 	reuseExistingServer: true,
-	// },
+	// /* Run your local dev server before starting the tests */
+	webServer: {
+		command: 'npm run dev --prefix frontend -- --host 127.0.0.1',
+		url: 'http://127.0.0.1:5173',
+		reuseExistingServer: !process.env.CI,
+	},
 });
