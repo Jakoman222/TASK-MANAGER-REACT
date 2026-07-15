@@ -143,9 +143,6 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
-      - name: Instalar dependencias frontend
-        run: npm ci --prefix frontend
-
       - name: Instalar Chromium
         run: npx playwright install --with-deps chromium
 
