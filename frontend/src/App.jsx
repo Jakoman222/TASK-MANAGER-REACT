@@ -9,7 +9,7 @@ import TaskList from "./components/TaskList";
 import { cleanTaskText, isValidTaskText, findTaskById, removeTaskById, createTaskPayload } from './utils/validations';
 
 // Se agrega el URL generado despues de desplegar el BACKEND
-const API_URL = 'https://task-manager-react-x4gb.onrender.com'
+const API_URL = import.meta.env.VITE_API_URL;
 // ${import.meta.env.VITE_API_URL} // sale undefined
 function App() {
   // App guarda el estado compartido para que input y lista usen la misma informacion.
@@ -35,7 +35,7 @@ function App() {
     
     const cleantext = cleanTaskText(taskText);
 
-    const newTask = createTaskPayload(taskText);
+    const newTask = createTaskPayload(cleantext);
     
 
     fetch(`${API_URL}/tasks`, {
