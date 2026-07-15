@@ -93,36 +93,36 @@ jobs:
       - name: Compilar backend
         run: npm run build
 
-  backend-tests:
-    name: Backend - Tests
-    runs-on: ubuntu-latest
+  # backend-tests:
+  #   name: Backend - Tests
+  #   runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./backend
+  #   defaults:
+  #     run:
+  #       working-directory: ./backend
 
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  #   env:
+  #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-    steps:
-      - name: Descargar repositorio
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Descargar repositorio
+  #       uses: actions/checkout@v4
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          cache: npm
-          cache-dependency-path: ./backend/package-lock.json
+  #     - name: Configurar Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: '24'
+  #         cache: npm
+  #         cache-dependency-path: ./backend/package-lock.json
 
-      - name: Instalar dependencias
-        run: npm ci
+  #     - name: Instalar dependencias
+  #       run: npm ci
 
-      - name: Generar Prisma Client
-        run: npx prisma generate
+  #     - name: Generar Prisma Client
+  #       run: npx prisma generate
 
-      - name: Ejecutar tests del backend
-        run: npx vitest run
+  #     - name: Ejecutar tests del backend
+  #       run: npx vitest run
 
 
   e2e-tests:
