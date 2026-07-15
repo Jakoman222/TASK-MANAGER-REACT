@@ -5,6 +5,9 @@ import Header from "./components/Header";
 import TaskInput from "./components/TaskInput";
 import TaskList from "./components/TaskList";
 
+// Utils
+import { cleanTaskText, isValidTaskText, findTaskById, removeTaskById, createTaskPayload } from './utils/validations';
+
 // Se agrega el URL generado despues de desplegar el BACKEND
 const API_URL = 'https://task-manager-react-x4gb.onrender.com'
 // ${import.meta.env.VITE_API_URL} // sale undefined
@@ -28,17 +31,12 @@ function App() {
 
 
   const addTask = (taskText) => {
-    const cleanText = taskText.trim()
+    if (!isValidTaskText(taskText)) return;
     
-    if (!cleanText){
-      return
-    }
+    const cleantext = cleanTaskText(taskText);
 
-    const newTask = {
-      // id: Date.now(), // ya no es necesario por el 'autoincrement' que usa el DB
-      text: cleanText,
-      completed: false
-    }
+    const newTask = createTaskPayload(taskText);
+    
 
     fetch(`${API_URL}/tasks`, {
       method: "POST",
@@ -72,7 +70,7 @@ function App() {
     })
   
     // 🔥 actualizar estado SIN recargar
-    setTasks((prev) => prev.filter((task) => task.id !== id));
+    setTasks((prev) => removeTaskById(prev, id));
   } catch (error) {
     console.error("Error eliminando:", error);
   }
@@ -81,7 +79,7 @@ function App() {
   // --------------------------------------------------------------------------------
 
   const toggleTask = async (taskId) => {
-    const task = tasks.find(t => t.id === taskId);
+    const task = findTaskById(tasks, taskId);
     if (!task) return;
 
     const nuevoValor = !task.completed;

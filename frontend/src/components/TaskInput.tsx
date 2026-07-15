@@ -24,6 +24,7 @@ function TaskInput({ onAddTask }: TaskInputProps) {
 
             <form className="task-input-form" onSubmit={handleSubmit}>
                 <input
+                    aria-label='Nueva Tarea'
                     className="task-input"
                     type="text"
                     id="taskInput"
