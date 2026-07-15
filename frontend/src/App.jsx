@@ -35,7 +35,7 @@ function App() {
     
     const cleantext = cleanTaskText(taskText);
 
-    const newTask = createTaskPayload(taskText);
+    const newTask = createTaskPayload(cleantext);
     
 
     fetch(`${API_URL}/tasks`, {
