@@ -49,6 +49,6 @@ describe('TaskInput', () => {
 		await user.type(input, 'Avance flutter app con Riverpod');
 		await user.click(button);
 
-		expect(input).toHaveValue(' ');
+		expect(input).toHaveValue('');
 	})
 });
