@@ -8,7 +8,7 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build && find dist -type f
+RUN npm run build
 
 EXPOSE 3000
 
