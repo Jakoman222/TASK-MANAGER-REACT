@@ -1,7 +1,3 @@
-
----
-![CI](https://github.com/Jakoman222/TASK-MANAGER-REACT/actions/workflows/ci.yml/badge.svg?branch=main)
-
 ---
 # 📝 Task Manager App — Full Stack
 
