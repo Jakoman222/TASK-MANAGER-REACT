@@ -1,8 +1,5 @@
 
 ---
-![CI](https://github.com/Jakoman222/TASK-MANAGER-REACT/actions/workflows/ci.yml/badge.svg?branch=main)
-
----
 # 📝 Task Manager App — Full Stack
 
 Aplicación full stack para la gestión de tareas, desarrollada con React, Node.js, Express, PostgreSQL y Prisma ORM.
@@ -18,8 +15,6 @@ El proyecto implementa una arquitectura cliente-servidor, persistencia de datos,
 * **Frontend:** desplegado en Vercel
 * **Backend:** desplegado en Render
 * **Base de datos de producción:** PostgreSQL en Neon
-
-> Agrega aquí los enlaces públicos del frontend y del backend cuando quieras mostrarlos directamente en tu portafolio.
 
 ---
 
@@ -486,8 +481,8 @@ Este proyecto fue desarrollado para demostrar conocimientos en:
 * Incorporar validaciones más robustas.
 * Mejorar el manejo de errores del frontend.
 * Agregar edición del texto de una tarea.
-* Implementar pruebas del backend con Supertest.
 * Añadir una base de datos exclusiva para testing.
+* Añadir las pruebas supertest del backend a Github Actions para CI. 
 * Mejorar la accesibilidad de la interfaz.
 
 ---
