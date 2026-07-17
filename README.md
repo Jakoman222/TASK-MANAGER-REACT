@@ -499,7 +499,7 @@ Este proyecto fue desarrollado para demostrar conocimientos en:
 Ingeniero Mecatrónico en transición hacia el desarrollo de software, con interés en desarrollo backend, automatización, DevOps e integración de inteligencia artificial en aplicaciones web.
 
 * GitHub: [Jakoman222](https://github.com/Jakoman222)
-* LinkedIn: agrega aquí tu perfil profesional
+* LinkedIn: [Jaime Condori Machaca](https://www.linkedin.com/in/jaime-condori-machaca-083052214)
 
 ---
 
