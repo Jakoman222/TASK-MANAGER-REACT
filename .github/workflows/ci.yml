@@ -169,3 +169,17 @@ jobs:
           name: playwright-report
           path: playwright-report/
           if-no-files-found: ignore
+          
+# Verificar que programa funciona con las variables SECRETS
+  pruebas:
+    name: Pruebas con variables seguras
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm run test
