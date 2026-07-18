@@ -8,10 +8,25 @@ import jwt from 'jsonwebtoken';
 const { PrismaClient } = require('@prisma/client');
 const { PrismaPg } = require('@prisma/adapter-pg');
 
-const SECRET_KEY = process.env.JWT_SECRET || 'MBLACKss501!';
+function getRequiredEnv(name: string): string {
+	const value = process.env[name];
+
+	if (!value) {
+		throw new Error(`La variable ${name} no está configurada`);
+	}
+
+	return value;
+}
+
+const SECRET_KEY = getRequiredEnv('JWT_SECRET');
+const DATABASE_URL = getRequiredEnv('DATABASE_URL');
+
+if (!SECRET_KEY) {
+	throw new Error('JWT_SECRET no está configurado');
+}
 
 const adapter = new PrismaPg({
-	connectionString: process.env.DATABASE_URL,
+	connectionString: DATABASE_URL,
 });
 
 const prisma = new PrismaClient({ adapter });
