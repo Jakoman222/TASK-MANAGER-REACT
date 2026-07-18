@@ -169,3 +169,76 @@ jobs:
           name: playwright-report
           path: playwright-report/
           if-no-files-found: ignore
+
+# Verificar que programa funciona con las variables SECRETS
+  verificar-database-url:
+    name: Verificar DATABASE_URL
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./backend
+
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: ./backend/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Verificar que DATABASE_URL existe
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "ERROR: DATABASE_URL no fue cargada"
+            exit 1
+          fi
+
+          echo "DATABASE_URL fue cargada correctamente"
+
+      - name: Generar Prisma Client
+        run: npx prisma generate
+
+      - name: Comprobar conexión con la base de datos
+        run: npx prisma migrate status
+
+# Servicio PostgreSQL efimero:
+  migraciones:
+    name: Migraciones y Seeds
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+    defaults:
+      run:
+        working-directory: ./backend
+    env:
+      DATABASE_URL: postgresql://testuser:testpass@localhost:5432/testdb
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
