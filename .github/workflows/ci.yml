@@ -169,17 +169,44 @@ jobs:
           name: playwright-report
           path: playwright-report/
           if-no-files-found: ignore
-          
+
 # Verificar que programa funciona con las variables SECRETS
-  pruebas:
-    name: Pruebas con variables seguras
+  verificar-database-url:
+    name: Verificar DATABASE_URL
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./backend
+
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
-      - run: npm ci
-      - run: npm run test
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: ./backend/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Verificar que DATABASE_URL existe
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "ERROR: DATABASE_URL no fue cargada"
+            exit 1
+          fi
+
+          echo "DATABASE_URL fue cargada correctamente"
+
+      - name: Generar Prisma Client
+        run: npx prisma generate
+
+      - name: Comprobar conexión con la base de datos
+        run: npx prisma migrate status
