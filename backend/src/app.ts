@@ -18,7 +18,7 @@ function getRequiredEnv(name: string): string {
 	return value;
 }
 
-const SECRET_KEY = getRequiredEnv('JWT_SECRET');
+const SECRET_KEY = 'secre_clave_FALSA_123123123'; // TODO: mover a variable de entorno
 const DATABASE_URL = getRequiredEnv('DATABASE_URL');
 
 if (!SECRET_KEY) {
