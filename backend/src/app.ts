@@ -19,7 +19,7 @@ function getRequiredEnv(name: string): string {
 }
 
 const SECRET_KEY = getRequiredEnv('JWT_SECRET');
-const DATABASE_URL = getRequiredEnv('DATABASE_URLL');
+const DATABASE_URL = getRequiredEnv('DATABASE_URL');
 
 if (!SECRET_KEY) {
 	throw new Error('JWT_SECRET no está configurado');
