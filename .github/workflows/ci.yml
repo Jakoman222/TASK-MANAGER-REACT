@@ -282,7 +282,7 @@ jobs:
       - name: Desplegar a Railway (staging)
         run: railway up --service BACKEND-TASK-MANAGER --environment staging
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_STAGING_TOKEN }}
 
   deploy-produccion:
     name: Deploy a Producción (manual)
@@ -294,4 +294,4 @@ jobs:
       - name: Desplegar a Railway (produccion)
         run: railway up --service BACKEND-TASK-MANAGER --environment production
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_PRODUCTION_TOKEN }}
