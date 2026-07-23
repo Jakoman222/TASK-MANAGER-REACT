@@ -118,5 +118,5 @@ function App() {
         </main>
     );
 }
-
+let variableDeFalla = 'No utilizada'
 export default App;
