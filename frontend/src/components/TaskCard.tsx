@@ -1,22 +1,26 @@
-import "./TaskCard.css";
+import './TaskCard.css';
 
 type TaskCardProps = {
-    text: string
-    completed: boolean
-    onToggle: () => void
-    onRemove: () => void
-}
+    text: string;
+    completed: boolean;
+    onToggle: () => void;
+    onRemove: () => void;
+};
 
 function TaskCard({ text, completed, onToggle, onRemove }: TaskCardProps) {
     return (
-        <li className={`task-card${completed ? " task-card--completed" : ""}`}>
+        <li className={`task-card${completed ? ' task-card--completed' : ''}`}>
             <button
-                className={`task-card__status${completed ? " task-card__status--completed" : ""}`}
+                className={`task-card__status${completed ? ' task-card__status--completed' : ''}`}
                 type="button"
                 onClick={onToggle}
-                aria-label={completed ? "Marcar tarea como pendiente" : "Marcar tarea como completada"}
+                aria-label={
+                    completed
+                        ? 'Marcar tarea como pendiente'
+                        : 'Marcar tarea como completada'
+                }
             >
-                {completed ? "✓" : ""}
+                {completed ? '✓' : ''}
             </button>
             <div className="task-card__content">
                 <p className="task-card__text">{text}</p>
