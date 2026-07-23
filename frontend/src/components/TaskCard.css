@@ -7,7 +7,9 @@
     background: rgba(247, 247, 247, 0.88);
     border: 1px solid rgba(41, 57, 51, 0.08);
     box-shadow: 0 12px 24px rgba(32, 50, 43, 0.06);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .task-card:hover {
@@ -70,7 +72,9 @@
     background: rgba(170, 69, 47, 0.1);
     color: #aa452f;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
 }
 
 .task-card__delete:hover {
@@ -82,7 +86,6 @@
     width: 18px;
     height: 18px;
 }
-
 
 @media (max-width: 640px) {
     .task-card__content {

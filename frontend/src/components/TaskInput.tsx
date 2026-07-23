@@ -1,30 +1,29 @@
-import './TaskInput.css'
-import { useState } from "react";
+import './TaskInput.css';
+import { useState } from 'react';
 
 type TaskInputProps = {
-    onAddTask: (taskText: string) => void
-}
+    onAddTask: (taskText: string) => void;
+};
 
 function TaskInput({ onAddTask }: TaskInputProps) {
-    const [taskText, setTaskText] = useState("");
+    const [taskText, setTaskText] = useState('');
 
     // El formulario maneja el click del boton y tambien la tecla Enter.
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         onAddTask(taskText);
-        setTaskText("");
+        setTaskText('');
     };
 
     return (
         <section className="task-input-panel">
             <div className="task-input-panel__copy">
                 <h2>Nueva tarea</h2>
-                
             </div>
 
             <form className="task-input-form" onSubmit={handleSubmit}>
                 <input
-                    aria-label='Nueva Tarea'
+                    aria-label="Nueva Tarea"
                     className="task-input"
                     type="text"
                     id="taskInput"
@@ -32,7 +31,11 @@ function TaskInput({ onAddTask }: TaskInputProps) {
                     value={taskText}
                     onChange={(event) => setTaskText(event.target.value)}
                 />
-                <button className="task-input-button" type="submit" id="addTaskBtn">
+                <button
+                    className="task-input-button"
+                    type="submit"
+                    id="addTaskBtn"
+                >
                     Agregar tarea
                 </button>
             </form>
@@ -40,4 +43,4 @@ function TaskInput({ onAddTask }: TaskInputProps) {
     );
 }
 
-export default TaskInput
+export default TaskInput;

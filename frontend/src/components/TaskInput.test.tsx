@@ -4,51 +4,50 @@ import { describe, it, expect, vi } from 'vitest';
 import TaskInput from './TaskInput';
 
 describe('TaskInput', () => {
-	it('renderiza el titulo, input y boton', async () => {
-		// Arrange
-		const onAddTask = vi.fn();
-		render(<TaskInput onAddTask={onAddTask} />);
+    it('renderiza el titulo, input y boton', async () => {
+        // Arrange
+        const onAddTask = vi.fn();
+        render(<TaskInput onAddTask={onAddTask} />);
 
-		// Assert
-		expect(
-			screen.getByRole('heading', { name: /nueva tarea/i }),
-		).toBeInTheDocument();
+        // Assert
+        expect(
+            screen.getByRole('heading', { name: /nueva tarea/i })
+        ).toBeInTheDocument();
 
-		expect(
-			screen.getByPlaceholderText(/escribe una nueva tarea/i),
-		).toBeInTheDocument();
+        expect(
+            screen.getByPlaceholderText(/escribe una nueva tarea/i)
+        ).toBeInTheDocument();
 
-		expect(
-			screen.getByRole('button', { name: /agregar tarea/i }),
-		).toBeInTheDocument();
-	});
+        expect(
+            screen.getByRole('button', { name: /agregar tarea/i })
+        ).toBeInTheDocument();
+    });
 
-	it('permitir escribir texto en el input', async ()=>{
-		const user = userEvent.setup();
-		const onAddTask = vi.fn();
+    it('permitir escribir texto en el input', async () => {
+        const user = userEvent.setup();
+        const onAddTask = vi.fn();
 
-		render(<TaskInput onAddTask={onAddTask}/>)
+        render(<TaskInput onAddTask={onAddTask} />);
 
-		const input = screen.getByPlaceholderText(/escribe una nueva tarea/i);
-		
-		await user.type(input, 'Estudiar Express JS');
+        const input = screen.getByPlaceholderText(/escribe una nueva tarea/i);
 
-		expect(input).toHaveValue('Estudiar Express JS');
+        await user.type(input, 'Estudiar Express JS');
 
-	});
+        expect(input).toHaveValue('Estudiar Express JS');
+    });
 
-	it('limpia el input despues de agregar la tarea', async ()=>{
-		const user = userEvent.setup();
-		const onAddTask = vi.fn();
+    it('limpia el input despues de agregar la tarea', async () => {
+        const user = userEvent.setup();
+        const onAddTask = vi.fn();
 
-		render(<TaskInput onAddTask={onAddTask}/>);
+        render(<TaskInput onAddTask={onAddTask} />);
 
-		const input = screen.getByPlaceholderText(/escribe una nueva tarea/i);
-		const button = screen.getByRole('button', {name: /agregar tarea/i});
+        const input = screen.getByPlaceholderText(/escribe una nueva tarea/i);
+        const button = screen.getByRole('button', { name: /agregar tarea/i });
 
-		await user.type(input, 'Avance flutter app con Riverpod');
-		await user.click(button);
+        await user.type(input, 'Avance flutter app con Riverpod');
+        await user.click(button);
 
-		expect(input).toHaveValue('');
-	})
+        expect(input).toHaveValue('');
+    });
 });

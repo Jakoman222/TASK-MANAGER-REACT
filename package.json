@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "<!-- ## Usage",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "format": "npm --prefix frontend run format && npm --prefix backend run format",
+    "format:check": "npm --prefix frontend run format:check && npm --prefix backend run format:check",
+    "lint": "npm --prefix frontend run lint && npm --prefix backend run lint"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Jakoman222/TASK-MANAGER-REACT.git"
