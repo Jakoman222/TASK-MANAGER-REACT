@@ -3,15 +3,12 @@ import './Footer.css';
 type FooterProps = {
     pendingCount: number;
     completedCount: number;
-    onClearCompleted: () => void;
 };
 
 function Footer({
     pendingCount,
     completedCount,
-    onClearCompleted,
 }: FooterProps) {
-    const hasCompletedTasks = completedCount > 0;
 
     return (
         <footer className="task-footer">
@@ -25,14 +22,6 @@ function Footer({
                     {completedCount} completadas
                 </span>
             </div>
-            <button
-                type="button"
-                className="task-footer__button"
-                onClick={onClearCompleted}
-                disabled={!hasCompletedTasks}
-            >
-                Limpiar completadas
-            </button>
         </footer>
     );
 }
