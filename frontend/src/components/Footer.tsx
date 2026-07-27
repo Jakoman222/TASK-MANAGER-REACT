@@ -5,11 +5,7 @@ type FooterProps = {
     completedCount: number;
 };
 
-function Footer({
-    pendingCount,
-    completedCount,
-}: FooterProps) {
-
+function Footer({ pendingCount, completedCount }: FooterProps) {
     return (
         <footer className="task-footer">
             {/* <p className="task-footer__text">Task Manager</p> */}
@@ -20,6 +16,9 @@ function Footer({
                 </span>
                 <span className="task-footer__pill">
                     {completedCount} completadas
+                </span>
+                <span className="task-footer__pill">
+                    {pendingCount + completedCount} Total
                 </span>
             </div>
         </footer>
