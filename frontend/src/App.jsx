@@ -21,9 +21,7 @@ function App() {
     // App guarda el estado compartido para que input y lista usen la misma informacion.
     const [tasks, setTasks] = useState([]);
 
-    // --------------------------------------------------------------------------------
     // 2) CONEXION BACKEND
-
     useEffect(() => {
         fetch(`${API_URL}/tasks`)
             .then((response) => response.json())
@@ -35,11 +33,13 @@ function App() {
             });
     }, []);
 
+    const pendingCount = tasks.filter((task) => !task.completed).length;
+    const completedCount = tasks.filter((task) => task.completed).length;
+
     const addTask = (taskText) => {
         if (!isValidTaskText(taskText)) return;
 
         const cleantext = cleanTaskText(taskText);
-
         const newTask = createTaskPayload(cleantext);
 
         fetch(`${API_URL}/tasks`, {
@@ -61,10 +61,7 @@ function App() {
             });
     };
 
-    // --------------------------------------------------------------------------------
-
     // DELETE
-
     const removeTask = async (id) => {
         // console.log(id);
         try {
@@ -72,7 +69,7 @@ function App() {
                 method: 'DELETE',
             });
 
-            // 🔥 actualizar estado SIN recargar
+            // actualizar estado SIN recargar
             setTasks((prev) => removeTaskById(prev, id));
         } catch (error) {
             console.error('Error eliminando:', error);
@@ -83,21 +80,43 @@ function App() {
 
     const toggleTask = async (taskId) => {
         const task = findTaskById(tasks, taskId);
-        if (!task) return;
+        if (!task) {
+            console.error(`No se encontró la tarea ${taskId}`);
+            return;
+        }
 
         const nuevoValor = !task.completed;
 
         try {
-            await fetch(`${API_URL}/tasks/${taskId}`, {
+            const updateResponse = await fetch(`${API_URL}/tasks/${taskId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ completed: nuevoValor }),
             });
 
+            if (!updateResponse.ok) {
+                throw new Error(
+                    `Error al actualizar: ${updateResponse.status}`
+                );
+            }
             // Refrescar todas las tareas desde el backend para asegurar actualización en frontend
             const responseAll = await fetch(`${API_URL}/tasks`);
-            const data = await responseAll.json();
-            setTasks(data);
+
+            if (!responseAll.ok) {
+                throw new Error(
+                    `Error al obtener tareas: ${responseAll.status}`
+                );
+            }
+
+            // const data = await responseAll.json();
+            // setTasks(data);
+            setTasks((prev) =>
+                prev.map((task) =>
+                    task.id === taskId
+                        ? { ...task, completed: nuevoValor }
+                        : task
+                )
+            );
         } catch (error) {
             console.error('Error toggling task:', error);
         }
@@ -113,7 +132,10 @@ function App() {
                     onToggleTask={toggleTask}
                     onRemoveTask={removeTask}
                 />
-                <Footer />
+                <Footer
+                    pendingCount={pendingCount}
+                    completedCount={completedCount}
+                />
             </section>
         </main>
     );

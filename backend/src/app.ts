@@ -180,7 +180,7 @@ app.delete('/tasks/:id', async (req: any, res: any) => {
     }
 });
 
-app.get('/health', (req, res) => {
+app.get('/health', (res: any) => {
     res.status(200).json({ status: 'ok' });
 });
 
